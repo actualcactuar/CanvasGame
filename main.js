@@ -1,8 +1,8 @@
 import Game from './modules/game.js';
 
 const canvas = document.getElementById('gamecanvas');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientHeight;
 
 const game = new Game(canvas);
 
@@ -15,5 +15,9 @@ game.onstart = () => {
     game.player.move(event.clientX, event.clientY);
   };
 };
-
-canvas.onclick = () => game.start();
+/**
+ *
+ * @param {MouseEvent} event
+ * @returns
+ */
+canvas.onclick = (event) => game.start(event.clientX, event.clientY);

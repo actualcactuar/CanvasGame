@@ -23,15 +23,17 @@ export default class Game {
     this.objectPool.add(gameObject);
   }
 
-  start() {
+  start(x, y) {
     this.player = new Player(
       16,
       'orange',
       this.canvas.width / 2,
       this.canvas.height / 2,
-      this.context
+      this.context,
+      60
     );
     this.spawn(this.player);
+    this.player.move(x, y);
     if (typeof this.onstart === 'function') this.onstart();
     this.update();
   }
