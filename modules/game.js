@@ -13,7 +13,7 @@ export default class Game {
    */
   constructor(canvas) {
     this.canvas = canvas;
-    this.canvas.style.backgroundColor = '#000';
+    this.canvas.style.backgroundColor = '#242a35';
     this.context = canvas.getContext('2d');
     this.objectPool = new Set();
     this.context.imageSmoothingEnabled = false;
