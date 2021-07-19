@@ -2,7 +2,7 @@ import Player from './player.js';
 import GameObject from './gameObject.js';
 
 const playerSprite = new Image();
-playerSprite.src = '../assets/starfighter-duotone.svg';
+playerSprite.src = 'assets/starfighter-duotone.svg';
 playerSprite.width = playerSprite.naturalWidth;
 playerSprite.height = playerSprite.naturalHeight;
 
