@@ -15,3 +15,11 @@ export function crispCanvas(canvas) {
 export function degreesToRadians(degree) {
   return degree * (Math.PI / 180);
 }
+
+export function createGameImage(source) {
+  const image = new Image();
+  image.src = source;
+  image.width = image.naturalWidth;
+  image.height = image.naturalHeight;
+  return image;
+}

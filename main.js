@@ -16,6 +16,15 @@ game.onstart = () => {
   canvas.onmousemove = (event) => {
     game.player.move(event.clientX, event.clientY);
   };
+  /**
+   *
+   * @param {KeyboardEvent} event
+   */
+  window.onkeydown = (event) => {
+    if (event.code === 'Space') {
+      game.player.shoot();
+    }
+  };
 };
 /**
  *

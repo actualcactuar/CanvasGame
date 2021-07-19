@@ -1,20 +1,23 @@
 import GameObject from './gameObject.js';
-import { degreesToRadians } from '../utils.js';
+import Game from './game.js';
+import Shot from './shot.js';
+import { degreesToRadians, createGameImage } from '../utils.js';
+
+const shotImage = createGameImage('assets/circle-duotone.svg');
 
 export default class Player extends GameObject {
   /**
-   *
+   * @param {Game} game
    * @param {number} size
-   * @param {string} color
+   * @param {Image} playerImage
    * @param {number} x
    * @param {number} y
    * @param {CanvasRenderingContext2D} context
    * @param {number} movementDelayRange
    */
-  constructor(size, color, x, y, context, movementDelayRange, playerImage) {
-    super(size, color, x, y, context);
+  constructor(game, size, x, y, image, movementDelayRange) {
+    super(game, size, x, y, image);
     this.movementDelayRange = movementDelayRange;
-    this.playerImage = playerImage;
   }
   /**
    *
@@ -22,10 +25,18 @@ export default class Player extends GameObject {
    * @param {number} y
    */
 
-  get center() {
-    return { x: this.x - this.size / 2, y: this.y - this.size / 2 };
+  shoot() {
+    new Shot(
+      this.game,
+      16,
+      this.center.x,
+      this.center.y,
+      shotImage,
+      this.cursorX,
+      this.cursorY,
+      36
+    );
   }
-
   /**
    *
    * @param {number} x
@@ -57,37 +68,41 @@ export default class Player extends GameObject {
     }
   }
 
+  /**
+   * @override
+   */
   draw() {
-    this.context.fillStyle = this.color;
-    this.context.strokeStyle = '#dadada';
+    const context = this.game.context;
 
-    this.context.save(); // save context so only player is affected
-    this.context.translate(this.center.x, this.center.y); // translate image to correct position
+    context.strokeStyle = '#dadada';
+
+    context.save(); // save context so only player is affected
+    context.translate(this.center.x, this.center.y); // translate image to correct position
     const radian = degreesToRadians(90); // for some reason image is rotate 90 degs, counter this with that
     const angle = Math.atan2(
       this.center.y - this.cursorY,
       this.center.x - this.cursorX
     ); // calculate angle differencce between cursor and center point
-    this.context.rotate(angle - radian); // rotate player
-    this.context.drawImage(
-      this.playerImage,
+    context.rotate(angle - radian); // rotate player
+    context.drawImage(
+      this.image,
       -1 * (this.size / 2), // draw self to own center
       -1 * (this.size / 2),
       this.size,
       this.size
     ); // draw player to top left corner, so transform value is correct
-    this.context.restore(); // restore other canvas components
+    context.restore(); // restore other canvas components
 
     // range redius
-    this.context.beginPath();
-    this.context.arc(
-      this.x - this.size / 2,
-      this.y - this.size / 2,
-      this.movementDelayRange,
-      0,
-      2 * Math.PI
-    );
-    this.context.stroke();
-    this.context.closePath();
+    // context.beginPath();
+    // context.arc(
+    //   this.x - this.size / 2,
+    //   this.y - this.size / 2,
+    //   this.movementDelayRange,
+    //   0,
+    //   2 * Math.PI
+    // );
+    // context.stroke();
+    // context.closePath();
   }
 }
