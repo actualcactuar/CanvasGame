@@ -34,7 +34,7 @@ export default class Player extends GameObject {
   move(x, y) {
     const yDistance = y - this.center.y;
     const xDistance = x - this.center.x;
-    const distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance); // get distance between cursor and centerpoint (pyhtagoras)
+    const distance = Math.hypot(xDistance, yDistance); // get distance between cursor and centerpoint (pyhtagoras)
     const sum = Math.abs(yDistance) + Math.abs(xDistance) + distance; // calculate all sides of the triangle
 
     this.cursorX = x;
