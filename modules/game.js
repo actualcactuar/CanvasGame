@@ -1,6 +1,11 @@
 import Player from './player.js';
 import GameObject from './gameObject.js';
 
+const playerSprite = new Image();
+playerSprite.src = '../assets/starfighter-duotone.svg';
+playerSprite.width = playerSprite.naturalWidth;
+playerSprite.height = playerSprite.naturalHeight;
+
 export default class Game {
   /**
    *
@@ -8,8 +13,10 @@ export default class Game {
    */
   constructor(canvas) {
     this.canvas = canvas;
+    this.canvas.style.backgroundColor = '#000';
     this.context = canvas.getContext('2d');
     this.objectPool = new Set();
+    this.context.imageSmoothingEnabled = false;
     this.onstart = () => {
       console.log('[Game::onstart] use this thi your update logic');
     };
@@ -25,12 +32,13 @@ export default class Game {
 
   start(x, y) {
     this.player = new Player(
-      16,
+      48,
       'orange',
       this.canvas.width / 2,
       this.canvas.height / 2,
       this.context,
-      60
+      96,
+      playerSprite
     );
     this.spawn(this.player);
     this.player.move(x, y);

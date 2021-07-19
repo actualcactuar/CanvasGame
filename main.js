@@ -1,8 +1,10 @@
 import Game from './modules/game.js';
+import { crispCanvas } from './utils.js';
 
 const canvas = document.getElementById('gamecanvas');
-canvas.width = canvas.clientWidth;
-canvas.height = canvas.clientHeight;
+crispCanvas(canvas);
+
+window.onresize = crispCanvas;
 
 const game = new Game(canvas);
 
