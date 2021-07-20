@@ -1,7 +1,9 @@
 import Player from './player.js';
 import GameObject from './gameObject.js';
 import { createGameImage } from '../utils.js';
+import Enemy from './enemy.js';
 
+const enemyImage = createGameImage('assets/starfighter-alt-duotone.svg');
 const playerImage = createGameImage('assets/starfighter-duotone.svg');
 
 export default class Game {
@@ -31,14 +33,15 @@ export default class Game {
   start(x, y) {
     this.player = new Player(
       this,
-      64,
+      1 / 3,
       this.canvas.width / 2,
       this.canvas.height / 2,
       playerImage,
       96
     );
-    // this.spawn(this.player);
     this.player.move(x, y);
+
+    new Enemy(this, 1 / 3, 100, 100, enemyImage);
     if (typeof this.onstart === 'function') this.onstart();
     this.update();
   }

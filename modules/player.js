@@ -18,6 +18,7 @@ export default class Player extends GameObject {
   constructor(game, size, x, y, image, movementDelayRange) {
     super(game, size, x, y, image);
     this.movementDelayRange = movementDelayRange;
+    console.log(this);
   }
   /**
    *
@@ -28,13 +29,13 @@ export default class Player extends GameObject {
   shoot() {
     new Shot(
       this.game,
-      24,
+      1 / 8,
       this.center.x,
       this.center.y,
       shotImage,
       this.cursorX,
       this.cursorY,
-      32
+      48
     );
   }
   /**
@@ -73,7 +74,6 @@ export default class Player extends GameObject {
    */
   draw() {
     const context = this.game.context;
-
     context.strokeStyle = '#dadada';
 
     context.save(); // save context so only player is affected
@@ -86,18 +86,18 @@ export default class Player extends GameObject {
     context.rotate(angle - radian); // rotate player
     context.drawImage(
       this.image,
-      -1 * (this.size / 2), // draw self to own center
-      -1 * (this.size / 2),
-      this.size,
-      this.size
+      this.drawHeight, // draw self to own center
+      this.drawWidth,
+      this.image.height * this.size,
+      this.image.width * this.size
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
 
     // range redius
     // context.beginPath();
     // context.arc(
-    //   this.x - this.size / 2,
-    //   this.y - this.size / 2,
+    //   this.center.x,
+    //   this.center.y,
     //   this.movementDelayRange,
     //   0,
     //   2 * Math.PI

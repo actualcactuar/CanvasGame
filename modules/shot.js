@@ -48,10 +48,10 @@ export default class Shot extends GameObject {
     context.translate(this.x, this.y); // translate image to correct position
     context.drawImage(
       this.image,
-      -1 * (this.size / 2), // draw self to own center
-      -1 * (this.size / 2),
-      this.size,
-      this.size
+      this.drawHeight, // draw self to own center
+      this.drawWidth,
+      this.image.width * this.size,
+      this.image.height * this.size
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
   }

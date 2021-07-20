@@ -18,8 +18,19 @@ export default class GameObject {
     this.game.spawn(this);
   }
 
+  get drawHeight() {
+    return -1 * ((this.image.height * this.size) / 2);
+  }
+
+  get drawWidth() {
+    return -1 * ((this.image.width * this.size) / 2);
+  }
+
   get center() {
-    return { x: this.x - this.size / 2, y: this.y - this.size / 2 };
+    return {
+      x: this.x - (this.image.width * this.size) / 2,
+      y: this.y - (this.image.height * this.size) / 2,
+    };
   }
 
   onUpdate() {
@@ -29,13 +40,13 @@ export default class GameObject {
   draw() {
     const context = this.game.context;
     context.save(); // save context so only player is affected
-    // context.translate(this.center.x, this.center.y); // translate image to correct position
+    context.translate(this.center.x, this.center.y); // translate image to correct position
     context.drawImage(
       this.image,
-      this.center.x, // draw self to own center
-      this.center.y,
-      this.size,
-      this.size
+      this.drawHeight, // draw self to own center
+      this.drawWidth,
+      this.image.width * this.size,
+      this.image.height * this.size
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
   }

@@ -19,7 +19,9 @@ export function degreesToRadians(degree) {
 export function createGameImage(source) {
   const image = new Image();
   image.src = source;
-  image.width = image.naturalWidth;
-  image.height = image.naturalHeight;
+  image.onload = () => {
+    image.width = image.naturalWidth;
+    image.height = image.naturalHeight;
+  };
   return image;
 }
