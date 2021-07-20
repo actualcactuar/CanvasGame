@@ -13,19 +13,21 @@ export default class Shot extends GameObject {
    * @param {number} destinationY
    * @param {number} speed
    */
-  constructor(game, size, x, y, image, destinationX, destinationY, speed) {
+  constructor(game, size, x, y, image, xDestination, yDestination, speed) {
     super(game, size, x, y, image);
-    this.destinationX = destinationX;
-    this.destinationY = destinationY;
+    this.xDestination = xDestination;
+    this.yDestination = yDestination;
     this.speed = speed;
-    this.xDirection = this.center.x > destinationX ? 'left' : 'right';
-    this.yDirection = this.center.y > destinationY ? 'up' : 'down';
-    const yDistance = destinationY - this.center.y;
-    const xDistance = destinationX - this.center.x;
-    const distance = Math.hypot(xDistance, yDistance); // get distance between cursor and centerpoint (pyhtagoras)
-    const sum = Math.abs(yDistance) + Math.abs(xDistance) + distance; // calculate all sides of the triangle
-    this.xEmphasis = Math.abs(xDistance / sum); // get percentual size x side of triange
-    this.yEmphasis = Math.abs(yDistance / sum); // same for y
+    this.xOrigin = x;
+    this.yOrigin = y;
+    this.xDirection = this.xOrigin > this.xDestination ? 'left' : 'right';
+    this.yDirection = this.yOrigin > this.yDestination ? 'up' : 'down';
+    const a = this.yDestination - this.yOrigin;
+    const b = this.xDestination - this.xOrigin;
+    const c = Math.hypot(b, a);
+    const sumOfAllSides = Math.abs(a) + Math.abs(b) + c;
+    this.xEmphasis = Math.abs(b / sumOfAllSides);
+    this.yEmphasis = Math.abs(a / sumOfAllSides);
   }
 
   onUpdate() {
@@ -43,11 +45,11 @@ export default class Shot extends GameObject {
   draw() {
     const context = this.game.context;
     context.save(); // save context so only player is affected
-    // context.translate(this.center.x, this.center.y); // translate image to correct position
+    context.translate(this.x, this.y); // translate image to correct position
     context.drawImage(
       this.image,
-      this.center.x, // draw self to own center
-      this.center.y,
+      -1 * (this.size / 2), // draw self to own center
+      -1 * (this.size / 2),
       this.size,
       this.size
     ); // draw player to top left corner, so transform value is correct

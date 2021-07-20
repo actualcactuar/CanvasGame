@@ -28,13 +28,13 @@ export default class Player extends GameObject {
   shoot() {
     new Shot(
       this.game,
-      16,
+      24,
       this.center.x,
       this.center.y,
       shotImage,
       this.cursorX,
       this.cursorY,
-      36
+      32
     );
   }
   /**
