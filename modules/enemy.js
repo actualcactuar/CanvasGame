@@ -1,6 +1,10 @@
 import GameObject from './gameObject.js';
 import Game from './game.js';
 import Shot from './shot.js';
+import Explosion from './explosion.js';
+import { createGameImage } from '../utils.js';
+
+const enemyImage = createGameImage('assets/enemy.svg');
 
 export default class Enemy extends GameObject {
   /**
@@ -11,12 +15,13 @@ export default class Enemy extends GameObject {
    * @param {number} y
    * @param {Image} image
    */
-  constructor(game, size, x, y, image) {
-    super(game, size, x, y, image);
+  constructor(game, size, x, y) {
+    super(game, size, x, y, enemyImage);
   }
 
   onCollision(collider) {
     if (collider instanceof Shot) {
+      new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
     }
   }

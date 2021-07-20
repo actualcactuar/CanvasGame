@@ -31,4 +31,15 @@ game.onStart = () => {
  * @param {MouseEvent} event
  * @returns
  */
-canvas.onclick = (event) => game.start(event.clientX, event.clientY);
+
+canvas.addEventListener(
+  'click',
+  /**
+   *
+   * @param {MouseEvent} event
+   */
+  (event) => {
+    game.start(event.clientX, event.clientY);
+  },
+  { once: true }
+);

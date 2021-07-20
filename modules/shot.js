@@ -1,6 +1,9 @@
 import GameObject from './gameObject.js';
 import Game from './game.js';
 import Enemy from './enemy.js';
+import { createGameImage } from '../utils.js';
+
+const shotImage = createGameImage('assets/laser.svg');
 
 export default class Shot extends GameObject {
   /**
@@ -9,24 +12,13 @@ export default class Shot extends GameObject {
    * @param {number} size
    * @param {number} x
    * @param {number} y
-   * @param {Image} image
    * @param {number} destinationX
    * @param {number} destinationY
    * @param {number} speed
    * @param {number} range
    */
-  constructor(
-    game,
-    size,
-    x,
-    y,
-    image,
-    xDestination,
-    yDestination,
-    speed,
-    range
-  ) {
-    super(game, size, x, y, image);
+  constructor(game, size, x, y, xDestination, yDestination, speed, range) {
+    super(game, size, x, y, shotImage);
     this.xDestination = xDestination;
     this.yDestination = yDestination;
     this.speed = speed;

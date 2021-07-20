@@ -4,20 +4,19 @@ import Shot from './shot.js';
 import Enemy from './enemy.js';
 import { degreesToRadians, createGameImage } from '../utils.js';
 
-const shotImage = createGameImage('assets/circle-duotone.svg');
+const playerImage = createGameImage('assets/player.svg');
 
 export default class Player extends GameObject {
   /**
    * @param {Game} game
    * @param {number} size
-   * @param {Image} playerImage
    * @param {number} x
    * @param {number} y
    * @param {CanvasRenderingContext2D} context
    * @param {number} movementDelayRange
    */
-  constructor(game, size, x, y, image, movementDelayRange) {
-    super(game, size, x, y, image);
+  constructor(game, size, x, y, movementDelayRange) {
+    super(game, size, x, y, playerImage);
     this.movementDelayRange = movementDelayRange;
   }
   /**
@@ -38,7 +37,6 @@ export default class Player extends GameObject {
       1 / 8,
       this.center.x,
       this.center.y,
-      shotImage,
       this.cursorX,
       this.cursorY,
       60,
