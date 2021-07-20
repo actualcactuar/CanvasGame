@@ -12,8 +12,19 @@ export default class Shot extends GameObject {
    * @param {number} destinationX
    * @param {number} destinationY
    * @param {number} speed
+   * @param {number} range
    */
-  constructor(game, size, x, y, image, xDestination, yDestination, speed) {
+  constructor(
+    game,
+    size,
+    x,
+    y,
+    image,
+    xDestination,
+    yDestination,
+    speed,
+    range
+  ) {
     super(game, size, x, y, image);
     this.xDestination = xDestination;
     this.yDestination = yDestination;
@@ -28,6 +39,13 @@ export default class Shot extends GameObject {
     const sumOfAllSides = Math.abs(a) + Math.abs(b) + c;
     this.xEmphasis = Math.abs(b / sumOfAllSides);
     this.yEmphasis = Math.abs(a / sumOfAllSides);
+    this.range = range;
+  }
+
+  get distanceFromOriginPoint() {
+    const a = this.xOrigin - this.center.x;
+    const b = this.yOrigin - this.center.y;
+    return Math.hypot(a, b);
   }
 
   onUpdate() {
@@ -40,6 +58,10 @@ export default class Shot extends GameObject {
       this.yDirection === 'up'
         ? this.y - 1 * this.speed * this.yEmphasis
         : this.y + 1 * this.speed * this.yEmphasis;
+
+    if (this.distanceFromOriginPoint > this.range) {
+      this.game.pop(this);
+    }
   }
 
   draw() {

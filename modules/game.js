@@ -23,11 +23,19 @@ export default class Game {
   }
 
   /**
-   *
+   * spawns  gameobject to pool
    * @param {GameObject} gameObject
    */
   spawn(gameObject) {
     this.objectPool.add(gameObject);
+  }
+
+  /**
+   * deletes gameobject from pool
+   * @param {GameObject} gameObject
+   */
+  pop(gameObject) {
+    this.objectPool.delete(gameObject);
   }
 
   start(x, y) {

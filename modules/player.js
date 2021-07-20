@@ -35,7 +35,8 @@ export default class Player extends GameObject {
       shotImage,
       this.cursorX,
       this.cursorY,
-      48
+      48,
+      400
     );
   }
   /**
