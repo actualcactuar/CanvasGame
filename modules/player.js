@@ -2,6 +2,7 @@ import GameObject from './gameObject.js';
 import Game from './game.js';
 import Shot from './shot.js';
 import Enemy from './enemy.js';
+import Explosion from './explosion.js';
 import { degreesToRadians, createGameImage } from '../utils.js';
 
 const playerImage = createGameImage('assets/player.svg');
@@ -27,6 +28,7 @@ export default class Player extends GameObject {
 
   onCollision(collider) {
     if (collider instanceof Enemy) {
+      new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
     }
   }
