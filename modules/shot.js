@@ -1,5 +1,6 @@
 import GameObject from './gameObject.js';
 import Game from './game.js';
+import Enemy from './enemy.js';
 
 export default class Shot extends GameObject {
   /**
@@ -46,6 +47,12 @@ export default class Shot extends GameObject {
     const a = this.xOrigin - this.center.x;
     const b = this.yOrigin - this.center.y;
     return Math.hypot(a, b);
+  }
+
+  onCollision(collider) {
+    if (collider instanceof Enemy) {
+      this.game.pop(this);
+    }
   }
 
   onUpdate() {

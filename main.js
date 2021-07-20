@@ -8,7 +8,7 @@ window.onresize = crispCanvas;
 
 const game = new Game(canvas);
 
-game.onstart = () => {
+game.onStart = () => {
   /**
    *
    * @param {MouseEvent} event

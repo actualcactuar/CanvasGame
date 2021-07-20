@@ -18,6 +18,13 @@ export default class GameObject {
     this.game.spawn(this);
   }
 
+  get width() {
+    return this.image.width * this.size;
+  }
+  get height() {
+    return this.image.height * this.size;
+  }
+
   get drawHeight() {
     return -1 * ((this.image.height * this.size) / 2);
   }
@@ -34,7 +41,11 @@ export default class GameObject {
   }
 
   onUpdate() {
-    // called on each update, boilerplate
+    // placeholder, called on each update
+  }
+
+  onCollision(gameObject) {
+    // placeholder, called when items collide
   }
 
   draw() {

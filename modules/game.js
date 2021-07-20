@@ -17,9 +17,6 @@ export default class Game {
     this.context = canvas.getContext('2d');
     this.objectPool = new Set();
     this.context.imageSmoothingEnabled = false;
-    this.onstart = () => {
-      console.log('[Game::onstart] use this thi your update logic');
-    };
   }
 
   /**
@@ -38,6 +35,10 @@ export default class Game {
     this.objectPool.delete(gameObject);
   }
 
+  onStart() {
+    // placeholder, called on start
+  }
+
   start(x, y) {
     this.player = new Player(
       this,
@@ -49,15 +50,16 @@ export default class Game {
     );
     this.player.move(x, y);
 
-    new Enemy(this, 1 / 3, 100, 100, enemyImage);
-    if (typeof this.onstart === 'function') this.onstart();
+    new Enemy(this, 1 / 4, 100, 100, enemyImage);
+    new Enemy(this, 1 / 4, 200, 400, enemyImage);
+    new Enemy(this, 1 / 4, 150, 600, enemyImage);
+    this.onStart();
     this.update();
   }
 
   update() {
     // clear canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     // draw all gameobjects to  canvas
     this.objectPool.forEach(
       /**
@@ -65,6 +67,29 @@ export default class Game {
        * @param {GameObject} gameObject
        */
       (gameObject) => {
+        this.objectPool.forEach(
+          /**
+           *
+           * @param {GameObject} object
+           * @returns
+           */
+          (collidingObject) => {
+            if (collidingObject === gameObject) return;
+            const xDiff = Math.abs(
+              collidingObject.center.x - gameObject.center.x
+            );
+            const yDiff = Math.abs(
+              collidingObject.center.y - gameObject.center.y
+            );
+            if (
+              xDiff < collidingObject.width &&
+              yDiff < collidingObject.height
+            ) {
+              collidingObject.onCollision(gameObject);
+              gameObject.onCollision(collidingObject);
+            }
+          }
+        );
         gameObject.onUpdate();
         gameObject.draw();
       }

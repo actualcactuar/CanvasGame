@@ -1,6 +1,7 @@
 import GameObject from './gameObject.js';
 import Game from './game.js';
 import Shot from './shot.js';
+import Enemy from './enemy.js';
 import { degreesToRadians, createGameImage } from '../utils.js';
 
 const shotImage = createGameImage('assets/circle-duotone.svg');
@@ -18,13 +19,18 @@ export default class Player extends GameObject {
   constructor(game, size, x, y, image, movementDelayRange) {
     super(game, size, x, y, image);
     this.movementDelayRange = movementDelayRange;
-    console.log(this);
   }
   /**
    *
    * @param {number} x
    * @param {number} y
    */
+
+  onCollision(collider) {
+    if (collider instanceof Enemy) {
+      this.game.pop(this);
+    }
+  }
 
   shoot() {
     new Shot(
@@ -35,7 +41,7 @@ export default class Player extends GameObject {
       shotImage,
       this.cursorX,
       this.cursorY,
-      48,
+      60,
       400
     );
   }
