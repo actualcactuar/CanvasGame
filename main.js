@@ -26,11 +26,6 @@ game.onStart = () => {
     }
   };
 };
-/**
- *
- * @param {MouseEvent} event
- * @returns
- */
 
 canvas.addEventListener(
   'click',
