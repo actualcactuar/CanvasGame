@@ -30,6 +30,7 @@ export default class Player extends GameObject {
     if (collider instanceof Enemy) {
       new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
+      delete this.game.player;
     }
   }
 

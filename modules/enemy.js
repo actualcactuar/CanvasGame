@@ -23,14 +23,21 @@ export default class Enemy extends GameObject {
   }
 
   calculateDirection() {
-    const a = this.game.player.center.x - this.center.x;
-    const b = this.game.player.center.y - this.center.y;
+    if (!this.game.player) {
+      this.speed = 0;
+      return;
+    }
+
+    const playerX = this.game.player.center.x;
+    const playerY = this.game.player.center.y;
+
+    const a = playerX - this.center.x;
+    const b = playerY - this.center.y;
     const c = Math.hypot(b, a);
     const sumOfAllSides = Math.abs(a) + Math.abs(b) + c;
 
-    this.xDirection =
-      this.center.x > this.game.player.center.x ? 'left' : 'right';
-    this.yDirection = this.center.y > this.game.player.center.y ? 'up' : 'down';
+    this.xDirection = this.center.x > playerX ? 'left' : 'right';
+    this.yDirection = this.center.y > playerY ? 'up' : 'down';
     this.xEmphasis = Math.abs(a / sumOfAllSides);
     this.yEmphasis = Math.abs(b / sumOfAllSides);
     this.distanceFromPlayer = c;

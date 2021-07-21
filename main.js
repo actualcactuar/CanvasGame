@@ -14,14 +14,14 @@ game.onStart = () => {
    * @param {MouseEvent} event
    */
   canvas.onmousemove = (event) => {
-    game.player.move(event.clientX, event.clientY);
+    if (game.player) game.player.move(event.clientX, event.clientY);
   };
   /**
    *
    * @param {KeyboardEvent} event
    */
   window.onkeydown = (event) => {
-    if (event.code === 'Space') {
+    if (event.code === 'Space' && game.player) {
       game.player.shoot();
     }
   };
