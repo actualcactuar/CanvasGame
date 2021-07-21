@@ -1,6 +1,7 @@
 import GameObject from './gameObject.js';
 import Game from './game.js';
 import Enemy from './enemy.js';
+import Explosion from './explosion.js';
 import { createGameImage } from '../utils.js';
 
 const shotImage = createGameImage('assets/laser.svg');
@@ -17,7 +18,18 @@ export default class Shot extends GameObject {
    * @param {number} speed
    * @param {number} range
    */
-  constructor(game, size, x, y, xDestination, yDestination, speed, range) {
+  constructor(
+    game,
+    size,
+    x,
+    y,
+    xDestination,
+    yDestination,
+    speed,
+    range,
+    origin,
+    image
+  ) {
     super(game, size, x, y, shotImage);
     this.xDestination = xDestination;
     this.yDestination = yDestination;
@@ -33,6 +45,11 @@ export default class Shot extends GameObject {
     this.xEmphasis = Math.abs(b / sumOfAllSides);
     this.yEmphasis = Math.abs(a / sumOfAllSides);
     this.range = range;
+    this.origin = origin;
+
+    if (image) {
+      this.image = image;
+    }
   }
 
   get distanceFromOriginPoint() {
@@ -42,7 +59,11 @@ export default class Shot extends GameObject {
   }
 
   onCollision(collider) {
-    if (collider instanceof Enemy) {
+    if (
+      (collider instanceof Enemy && collider !== this.origin) ||
+      (collider instanceof Shot && collider !== this)
+    ) {
+      new Explosion(this.game, this.size / 2, this.x, this.y);
       this.game.pop(this);
     }
   }

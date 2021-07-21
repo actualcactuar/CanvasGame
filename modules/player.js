@@ -27,7 +27,10 @@ export default class Player extends GameObject {
    */
 
   onCollision(collider) {
-    if (collider instanceof Enemy) {
+    if (
+      collider instanceof Enemy ||
+      (collider instanceof Shot && collider.origin !== this)
+    ) {
       new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
       delete this.game.player;
@@ -43,7 +46,8 @@ export default class Player extends GameObject {
       this.cursorX,
       this.cursorY,
       60,
-      400
+      400,
+      this
     );
   }
   /**
