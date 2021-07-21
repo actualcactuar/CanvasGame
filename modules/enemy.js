@@ -22,7 +22,7 @@ export default class Enemy extends GameObject {
   constructor(game, size, x, y, speed, rateOfFire = 2000) {
     super(game, size, x, y, enemyImage);
     this.speed = speed;
-    this.lastFiredTime = Date.now();
+    this.lastFiredTime = rateOfFire / 2;
     this.rateOfFire = rateOfFire;
   }
 
@@ -52,8 +52,8 @@ export default class Enemy extends GameObject {
       this.center.y,
       this.game.player.center.x,
       this.game.player.center.y,
-      20,
-      800,
+      15,
+      400,
       this,
       enemyLaser
     );
