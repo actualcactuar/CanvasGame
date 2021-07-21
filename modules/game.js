@@ -45,9 +45,9 @@ export default class Game {
     );
     this.player.move(x, y);
 
-    new Enemy(this, 1 / 4, 100, 100);
-    new Enemy(this, 1 / 4, 200, 400);
-    new Enemy(this, 1 / 4, 150, 600);
+    new Enemy(this, 1 / 4, 100, 100, 7);
+    new Enemy(this, 1 / 4, 200, 400, 7);
+    new Enemy(this, 1 / 4, 150, 600, 7);
     this.onStart();
     this.update();
   }
