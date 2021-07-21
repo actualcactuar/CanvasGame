@@ -31,6 +31,7 @@ export default class Player extends GameObject {
       collider instanceof Enemy ||
       (collider instanceof Shot && collider.origin !== this)
     ) {
+      this.game.emit(this.game.events.GAME_OVER);
       new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
       delete this.game.player;

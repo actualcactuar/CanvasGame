@@ -22,7 +22,7 @@ export default class Enemy extends GameObject {
   constructor(game, size, x, y, speed, rateOfFire = 2000) {
     super(game, size, x, y, enemyImage);
     this.speed = speed;
-    this.lastFiredTime = rateOfFire / 2;
+    this.lastFiredTime = Date.now();
     this.rateOfFire = rateOfFire;
   }
 
@@ -97,6 +97,8 @@ export default class Enemy extends GameObject {
     ) {
       new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
+      this.game.score = this.game.score + 100;
+      this.game.emit(this.game.events.UPDATE_HUD);
     }
   }
 

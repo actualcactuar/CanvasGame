@@ -8,6 +8,17 @@ window.onresize = crispCanvas;
 
 const game = new Game(canvas);
 
+const {
+  events: { UPDATE_HUD, GAME_OVER },
+} = game;
+game.subscribe(UPDATE_HUD, (...args) => {
+  console.log(UPDATE_HUD, game.score);
+});
+
+game.subscribe(GAME_OVER, (...args) => {
+  console.log(GAME_OVER, game.score, game.gameOver);
+});
+
 game.onStart = () => {
   /**
    *
