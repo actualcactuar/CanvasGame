@@ -12,11 +12,12 @@ const game = new Game(canvas);
 const {
   events: { UPDATE_HUD, GAME_OVER },
 } = game;
-game.subscribe(UPDATE_HUD, (...args) => {
+
+game.subscribe(UPDATE_HUD, () => {
   score.innerText = game.score;
 });
 
-game.subscribe(GAME_OVER, (...args) => {
+game.subscribe(GAME_OVER, () => {
   // @TODO do something on gameover
 });
 
