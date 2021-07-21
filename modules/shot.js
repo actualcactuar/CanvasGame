@@ -2,6 +2,7 @@ import GameObject from './gameObject.js';
 import Game from './game.js';
 import Enemy from './enemy.js';
 import Explosion from './explosion.js';
+import Player from './player.js';
 import { createGameImage } from '../utils.js';
 
 const shotImage = createGameImage('assets/laser.svg');
@@ -60,7 +61,8 @@ export default class Shot extends GameObject {
 
   onCollision(collider) {
     if (
-      (collider instanceof Enemy && collider !== this.origin) ||
+      ((collider instanceof Enemy || collider instanceof Player) &&
+        collider !== this.origin) ||
       (collider instanceof Shot && collider !== this)
     ) {
       new Explosion(this.game, this.size / 2, this.x, this.y);
