@@ -86,7 +86,6 @@ export default class Player extends GameObject {
    */
   draw() {
     const context = this.game.context;
-    context.strokeStyle = '#dadada';
 
     context.save(); // save context so only player is affected
     context.translate(this.center.x, this.center.y); // translate image to correct position
@@ -104,17 +103,5 @@ export default class Player extends GameObject {
       this.image.width * this.size
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
-
-    // range redius
-    // context.beginPath();
-    // context.arc(
-    //   this.center.x,
-    //   this.center.y,
-    //   this.movementDelayRange,
-    //   0,
-    //   2 * Math.PI
-    // );
-    // context.stroke();
-    // context.closePath();
   }
 }

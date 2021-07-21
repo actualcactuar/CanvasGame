@@ -3,7 +3,7 @@ import Game from './game.js';
 import Shot from './shot.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
-import { createGameImage } from '../utils.js';
+import { createGameImage, degreesToRadians } from '../utils.js';
 
 const enemyImage = createGameImage('assets/enemy.svg');
 const enemyLaser = createGameImage('assets/enemy-laser.svg');
@@ -98,5 +98,23 @@ export default class Enemy extends GameObject {
       new Explosion(this.game, this.size, this.x, this.y);
       this.game.pop(this);
     }
+  }
+
+  draw() {
+    const context = this.game.context;
+    const turn = degreesToRadians(90);
+    const angle = Math.atan2(this.y - this.playerY, this.x - this.playerX);
+
+    context.save();
+    context.translate(this.center.x, this.center.y);
+    context.rotate(angle + turn);
+    context.drawImage(
+      this.image,
+      this.drawHeight,
+      this.drawWidth,
+      this.image.width * this.size,
+      this.image.height * this.size
+    );
+    context.restore();
   }
 }
