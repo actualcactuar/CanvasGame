@@ -1,6 +1,7 @@
 import Game from './modules/game.js';
 import { crispCanvas } from './utils.js';
 
+const score = document.getElementById('score');
 const canvas = document.getElementById('gamecanvas');
 crispCanvas(canvas);
 
@@ -12,11 +13,11 @@ const {
   events: { UPDATE_HUD, GAME_OVER },
 } = game;
 game.subscribe(UPDATE_HUD, (...args) => {
-  console.log(UPDATE_HUD, game.score);
+  score.innerText = game.score;
 });
 
 game.subscribe(GAME_OVER, (...args) => {
-  console.log(GAME_OVER, game.score, game.gameOver);
+  // @TODO do something on gameover
 });
 
 game.onStart = () => {
