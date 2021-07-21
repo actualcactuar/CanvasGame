@@ -62,21 +62,21 @@ export default class Game extends EventEmitter {
   }
 
   start(x, y) {
-    this.player = new Player(this, 1 / 3, ...this.spawnPoints.centerMiddle, 96);
+    this.player = new Player(this, 1 / 2, ...this.spawnPoints.centerMiddle, 96);
     this.player.move(x, y);
 
-    new Enemy(this, 1 / 4, ...this.spawnPoints.topLeft, 7);
-    new Enemy(this, 1 / 4, ...this.spawnPoints.centerRight, 7);
+    new Enemy(this, 1 / 3, ...this.spawnPoints.topLeft, 7);
+    new Enemy(this, 1 / 3, ...this.spawnPoints.centerRight, 7);
 
     this.midSpawn = setTimeout(() => {
-      new Enemy(this, 1 / 4, ...this.spawnPoints.bottomMiddle, 7);
-      new Enemy(this, 1 / 4, ...this.spawnPoints.bottomLeft, 7);
+      new Enemy(this, 1 / 3, ...this.spawnPoints.bottomMiddle, 7);
+      new Enemy(this, 1 / 3, ...this.spawnPoints.bottomLeft, 7);
     }, 5000);
 
     this.lastSpawn = setTimeout(() => {
-      new Enemy(this, 1 / 4, ...this.spawnPoints.centerLeft, 7);
-      new Enemy(this, 1 / 4, ...this.spawnPoints.topRight, 7);
-      new Enemy(this, 1 / 4, ...this.spawnPoints.bottomRight, 7);
+      new Enemy(this, 1 / 3, ...this.spawnPoints.centerLeft, 7);
+      new Enemy(this, 1 / 3, ...this.spawnPoints.topRight, 7);
+      new Enemy(this, 1 / 3, ...this.spawnPoints.bottomRight, 7);
     }, 10000);
 
     this.onStart();

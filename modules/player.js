@@ -41,7 +41,7 @@ export default class Player extends GameObject {
   shoot() {
     new Shot(
       this.game,
-      1 / 8,
+      1 / 6,
       this.center.x,
       this.center.y,
       this.cursorX,

@@ -47,7 +47,7 @@ export default class Enemy extends GameObject {
   shootPlayer() {
     new Shot(
       this.game,
-      1 / 8,
+      1 / 6,
       this.center.x,
       this.center.y,
       this.game.player.center.x,
