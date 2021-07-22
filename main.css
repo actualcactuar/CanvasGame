@@ -100,3 +100,10 @@ h2 {
   font-size: 3rem;
   text-align: center;
 }
+
+#shootbutton {
+  display: none;
+  position: fixed;
+  bottom: 1rem;
+  left: 2rem;
+}

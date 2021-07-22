@@ -1,6 +1,8 @@
 import Game from './modules/game.js';
 import { crispCanvas } from './utils.js';
 
+const { matches } = window.matchMedia('(any-hover: hover)');
+const hasTouchScreen = !matches;
 const gameMenu = document.getElementById('gamemenu');
 const menuText = document.getElementById('menutext');
 const startBtn = document.getElementById('start');
@@ -41,6 +43,7 @@ function startGame() {
   canvas.onmousemove = (event) => {
     if (game.player) game.player.move(event.clientX, event.clientY);
   };
+
   /**
    *
    * @param {KeyboardEvent} event
@@ -50,6 +53,29 @@ function startGame() {
       game.player.shoot();
     }
   };
+
+  if (hasTouchScreen) {
+    /**
+     *
+     * @param {TouchEvent} event
+     */
+    canvas.ontouchmove = (event) => {
+      event.preventDefault();
+      const {
+        touches: [move],
+      } = event;
+      if (game.player) game.player.move(move.clientX, move.clientY);
+    };
+    canvas.ontouchstart = (event) => {
+      event.preventDefault();
+      const {
+        touches: [move, shoot],
+      } = event;
+      if (shoot) {
+        if (game.player) game.player.shoot();
+      }
+    };
+  }
 
   game.start();
 }
