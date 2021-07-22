@@ -89,16 +89,23 @@ export default class Enemy extends GameObject {
     this.targetPlayer();
   }
 
+  onDeath() {
+    new Explosion(this.game, this.size, this.x, this.y);
+    this.game.pop(this);
+    this.game.score = this.game.score + 100;
+    this.game.emit(this.game.events.UPDATE_HUD);
+    if (this.game.currentEnemyWaveDefeated) {
+      this.game.spawnEnemyWave();
+    }
+  }
+
   onCollision(collider) {
     if (
       (collider instanceof Shot && collider.origin !== this) ||
       collider instanceof Player ||
       collider instanceof Enemy
     ) {
-      new Explosion(this.game, this.size, this.x, this.y);
-      this.game.pop(this);
-      this.game.score = this.game.score + 100;
-      this.game.emit(this.game.events.UPDATE_HUD);
+      this.onDeath();
     }
   }
 

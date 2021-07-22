@@ -10,7 +10,7 @@ window.onresize = crispCanvas;
 const game = new Game(canvas);
 
 const {
-  events: { UPDATE_HUD, GAME_OVER },
+  events: { UPDATE_HUD, GAME_OVER, GAME_WON },
 } = game;
 
 game.subscribe(UPDATE_HUD, () => {
@@ -19,6 +19,10 @@ game.subscribe(UPDATE_HUD, () => {
 
 game.subscribe(GAME_OVER, () => {
   // @TODO do something on gameover
+});
+game.subscribe(GAME_WON, () => {
+  console.log('WIN');
+  // @TODO do something when game is won
 });
 
 game.onStart = () => {

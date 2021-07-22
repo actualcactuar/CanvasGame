@@ -19,6 +19,7 @@ export default class Game extends EventEmitter {
     this.objectPool = new Set();
     this.context.imageSmoothingEnabled = false;
     this.gameOver = false;
+    this.gameWon = false;
     this.score = 0;
     this.subscriptions = new Map();
     this.spawnPoints = {
@@ -32,16 +33,48 @@ export default class Game extends EventEmitter {
       bottomMiddle: [this.canvas.width / 2, this.canvas.height + 100],
       bottomRight: [this.canvas.width + 100, this.canvas.height + 100],
     };
+    this.enemyWaves = new Set()
+      .add([this.spawnPoints.centerRight, this.spawnPoints.topLeft])
+      .add([this.spawnPoints.bottomMiddle, this.spawnPoints.bottomLeft])
+      .add([
+        this.spawnPoints.centerLeft,
+        this.spawnPoints.topRight,
+        this.spawnPoints.bottomRight,
+      ])
+      .values();
 
     this.subscribe(this.events.GAME_OVER, this.onGameOver.bind(this));
+    this.subscribe(this.events.GAME_WON, this.onGameWon.bind(this));
   }
 
   /**
+   *
    * spawns  gameobject to pool
    * @param {GameObject} gameObject
    */
   spawn(gameObject) {
     this.objectPool.add(gameObject);
+  }
+
+  get currentEnemyWaveDefeated() {
+    let waveDefeated = true;
+    this.objectPool.forEach((gameObject) => {
+      if (gameObject instanceof Enemy) {
+        waveDefeated = false;
+      }
+    });
+    return waveDefeated;
+  }
+
+  spawnEnemyWave() {
+    const { value: wave, done } = this.enemyWaves.next();
+    if (done) {
+      this.emit(this.events.GAME_WON);
+      return;
+    }
+    wave.forEach((coordinates) => {
+      new Enemy(this, 1 / 3, ...coordinates, 7);
+    });
   }
 
   /**
@@ -56,30 +89,18 @@ export default class Game extends EventEmitter {
     // placeholder, called on start
   }
 
+  onGameWon() {
+    this.gameWon = true;
+  }
   onGameOver() {
     this.gameOver = true;
-    window.clearTimeout(this.midSpawn);
-    window.clearTimeout(this.lastSpawn);
   }
 
   start(x, y) {
     this.player = new Player(this, 1 / 2, ...this.spawnPoints.centerMiddle, 96);
     this.player.move(x, y);
 
-    new Enemy(this, 1 / 3, ...this.spawnPoints.topLeft, 7);
-    new Enemy(this, 1 / 3, ...this.spawnPoints.centerRight, 7);
-
-    this.midSpawn = setTimeout(() => {
-      new Enemy(this, 1 / 3, ...this.spawnPoints.bottomMiddle, 7);
-      new Enemy(this, 1 / 3, ...this.spawnPoints.bottomLeft, 7);
-    }, 5000);
-
-    this.lastSpawn = setTimeout(() => {
-      new Enemy(this, 1 / 3, ...this.spawnPoints.centerLeft, 7);
-      new Enemy(this, 1 / 3, ...this.spawnPoints.topRight, 7);
-      new Enemy(this, 1 / 3, ...this.spawnPoints.bottomRight, 7);
-    }, 10000);
-
+    this.spawnEnemyWave();
     this.onStart();
     this.update();
   }
