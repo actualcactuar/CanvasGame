@@ -4,9 +4,11 @@ import Shot from './shot.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
 import { createGameImage, degreesToRadians } from '../utils.js';
+import enemyImageUrl from '../assets/enemy.svg';
+import enemyLaserImageUrl from '../assets/enemy-laser.svg';
 
-const enemyImage = await createGameImage('assets/enemy.svg');
-const enemyLaser = await createGameImage('assets/enemy-laser.svg');
+const enemyImage = await createGameImage(enemyImageUrl);
+const enemyLaser = await createGameImage(enemyLaserImageUrl);
 
 export default class Enemy extends GameObject {
   /**
