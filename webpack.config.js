@@ -16,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
+        test: /\.(svg)$/i,
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
