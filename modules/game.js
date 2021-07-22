@@ -41,6 +41,12 @@ export default class Game extends EventEmitter {
         this.spawnPoints.topRight,
         this.spawnPoints.bottomRight,
       ])
+      .add([
+        this.spawnPoints.bottomLeft,
+        this.spawnPoints.topRight,
+        this.spawnPoints.bottomRight,
+        this.spawnPoints.topMiddle,
+      ])
       .values();
 
     this.subscribe(this.events.GAME_OVER, this.onGameOver.bind(this));
