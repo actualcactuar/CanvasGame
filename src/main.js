@@ -1,5 +1,5 @@
 import './main.css';
-import Game from './modules/game.js';
+import Game from '../modules/game.js';
 import { crispCanvas } from './utils.js';
 
 const { matches } = window.matchMedia('(any-hover: hover)');

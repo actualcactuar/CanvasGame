@@ -1,5 +1,5 @@
 import GameObject from './gameObject.js';
-import { createGameImage } from '../utils.js';
+import { createGameImage } from '../src/utils.js';
 import starImageUrl from '../assets/star-duotone.svg';
 
 const starImage = await createGameImage(starImageUrl);

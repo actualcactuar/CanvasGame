@@ -3,7 +3,7 @@ import Game from './game.js';
 import Enemy from './enemy.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
-import { createGameImage } from '../utils.js';
+import { createGameImage } from '../src/utils.js';
 
 const shotImage = await createGameImage('assets/laser.svg');
 

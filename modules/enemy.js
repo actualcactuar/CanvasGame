@@ -3,7 +3,7 @@ import Game from './game.js';
 import Shot from './shot.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
-import { createGameImage, degreesToRadians } from '../utils.js';
+import { createGameImage, degreesToRadians } from '../src/utils.js';
 import enemyImageUrl from '../assets/enemy.svg';
 import enemyLaserImageUrl from '../assets/enemy-laser.svg';
 
