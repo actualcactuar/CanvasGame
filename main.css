@@ -16,10 +16,10 @@ html {
 }
 
 #gamecanvas {
-  background-image: linear-gradient(45deg, #0a0b0c69, #242a3579),
-    url(./assets/background.jpg);
+  background-image: url(./assets/background.jpg);
   background-position: center center;
   background-size: cover;
+  background-blend-mode: luminosity;
 }
 
 #hud {

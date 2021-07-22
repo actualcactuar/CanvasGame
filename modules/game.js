@@ -1,6 +1,7 @@
 import Player from './player.js';
 import GameObject from './gameObject.js';
 import Enemy from './enemy.js';
+import Star from './star.js';
 import * as GameEvents from './events.js';
 import EventEmitter from './eventEmitter.js';
 
@@ -21,15 +22,15 @@ export default class Game extends EventEmitter {
     this.score = 0;
     this.subscriptions = new Map();
     this.spawnPoints = {
-      topLeft: [100, 100],
-      topMiddle: [this.canvas.width / 2, 100],
-      topRight: [this.canvas.width - 100, 100],
-      centerLeft: [100, this.canvas.height / 2],
+      topLeft: [-100, -100],
+      topMiddle: [this.canvas.width / 2, -100],
+      topRight: [this.canvas.width + 100, -100],
+      centerLeft: [-100, this.canvas.height / 2],
       centerMiddle: [this.canvas.width / 2, this.canvas.height / 2],
-      centerRight: [this.canvas.width - 100, this.canvas.height / 2],
-      bottomLeft: [100, this.canvas.height - 100],
-      bottomMiddle: [this.canvas.width / 2, this.canvas.height - 100],
-      bottomRight: [this.canvas.width - 100, this.canvas.height - 100],
+      centerRight: [this.canvas.width + 100, this.canvas.height / 2],
+      bottomLeft: [-100, this.canvas.height + 100],
+      bottomMiddle: [this.canvas.width / 2, this.canvas.height + 100],
+      bottomRight: [this.canvas.width + 100, this.canvas.height + 100],
     };
 
     this.subscribe(this.events.GAME_OVER, this.onGameOver.bind(this));
