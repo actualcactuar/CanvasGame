@@ -1,6 +1,7 @@
 import GameObject from './gameObject.js';
 import { createGameImage } from '../utils.js';
-const explosionImage = createGameImage('assets/explosion.svg');
+const explosionImage = await createGameImage('assets/explosion.svg');
+console.log({ explosionImage });
 
 export default class Explosion extends GameObject {
   /**

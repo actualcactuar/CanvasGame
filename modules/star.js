@@ -1,7 +1,7 @@
 import GameObject from './gameObject.js';
 import { createGameImage } from '../utils.js';
 
-const starImage = createGameImage('assets/star-duotone.svg');
+const starImage = await createGameImage('assets/star-duotone.svg');
 
 export default class Star extends GameObject {
   /**

@@ -5,7 +5,7 @@ import Explosion from './explosion.js';
 import Player from './player.js';
 import { createGameImage } from '../utils.js';
 
-const shotImage = createGameImage('assets/laser.svg');
+const shotImage = await createGameImage('assets/laser.svg');
 
 export default class Shot extends GameObject {
   /**

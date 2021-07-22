@@ -1,3 +1,4 @@
+import './main.css';
 import Game from './modules/game.js';
 import { crispCanvas } from './utils.js';
 
@@ -10,7 +11,7 @@ const score = document.getElementById('score');
 const canvas = document.getElementById('gamecanvas');
 crispCanvas(canvas);
 
-window.onresize = crispCanvas;
+window.onresize = crispCanvas.bind(window, canvas);
 
 function startGame() {
   const game = new Game(canvas);

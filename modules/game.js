@@ -78,7 +78,7 @@ export default class Game extends EventEmitter {
       return;
     }
     wave.forEach((coordinates) => {
-      new Enemy(this, 1 / 3, ...coordinates, 7);
+      new Enemy(this, 1 / 10, ...coordinates, 7);
     });
   }
 
@@ -98,7 +98,7 @@ export default class Game extends EventEmitter {
   }
 
   start(x, y) {
-    this.player = new Player(this, 1 / 2, ...this.spawnPoints.centerMiddle, 96);
+    this.player = new Player(this, 1 / 8, ...this.spawnPoints.centerMiddle, 96);
     this.player.move(x, y);
     this.score = 0;
     this.emit(this.events.UPDATE_HUD);

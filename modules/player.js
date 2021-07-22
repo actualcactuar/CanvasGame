@@ -5,7 +5,7 @@ import Enemy from './enemy.js';
 import Explosion from './explosion.js';
 import { degreesToRadians, createGameImage } from '../utils.js';
 
-const playerImage = createGameImage('assets/player.svg');
+const playerImage = await createGameImage('assets/player.svg');
 
 export default class Player extends GameObject {
   /**
@@ -41,7 +41,7 @@ export default class Player extends GameObject {
   shoot() {
     new Shot(
       this.game,
-      1 / 6,
+      1 / 20,
       this.center.x,
       this.center.y,
       this.cursorX,

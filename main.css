@@ -1,5 +1,5 @@
 :root {
-  --font: 400 1.5rem 'Bangers', Helvetica, Arial, sans-serif;
+  --font: 400 1.5rem 'Bangers', Verdana, sans-serif;
   --palette-background: #aeb4bf;
   --palette-foreground: #222833;
   --palette-text: #fefefe;
@@ -13,6 +13,7 @@ body {
   text-transform: uppercase;
   color: #fff;
   letter-spacing: 1px;
+  overflow: hidden;
 }
 
 html {
@@ -23,6 +24,7 @@ html {
   position: relative;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 #gamecanvas {
@@ -31,10 +33,11 @@ html {
   background-position: center center;
   background-size: cover;
   background-blend-mode: luminosity;
+  overflow: hidden;
 }
 
 #hud {
-  position: fixed;
+  position: absolute;
   top: 1rem;
   left: 1rem;
   color: #fff;
@@ -49,7 +52,7 @@ html {
 }
 
 #credits {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 0;
   margin: 1rem;
@@ -59,13 +62,13 @@ html {
 
 .menu {
   position: absolute;
-  top: 25%;
+  top: 10rem;
   left: 50%;
   min-height: 300px;
   min-width: 200px;
   text-align: center;
   /* background-color: var(--palette-foreground); */
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   /* border: 0.25rem outset var(--palette-background);
   box-shadow: 10px 10px 5px 5px rgba(0, 0, 0, 0.5); */
 
@@ -101,9 +104,14 @@ h2 {
   text-align: center;
 }
 
-#shootbutton {
-  display: none;
-  position: fixed;
-  bottom: 1rem;
-  left: 2rem;
+@media screen and (max-width: 425px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
 }

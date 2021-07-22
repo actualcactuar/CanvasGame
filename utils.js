@@ -2,6 +2,7 @@
  *
  * @param {HTMLCanvasElement} canvas
  */
+
 export function crispCanvas(canvas) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -16,12 +17,22 @@ export function degreesToRadians(degree) {
   return degree * (Math.PI / 180);
 }
 
-export function createGameImage(source) {
+export async function createGameImage(source) {
+  const response = await fetch(source);
+  const blob = await response.blob();
+  const [match] = (await blob.text()).match('viewBox=".*?"');
   const image = new Image();
-  image.src = source;
-  image.onload = () => {
-    image.width = image.naturalWidth;
-    image.height = image.naturalHeight;
-  };
+
+  if (match) {
+    const [x, y, width, height] = match
+      .split(/viewBox|="|"| /)
+      .filter((val) => !!val);
+
+    image.width = width;
+    image.height = height;
+  }
+
+  image.src = URL.createObjectURL(blob);
+
   return image;
 }
