@@ -20,7 +20,6 @@ export default class Game extends EventEmitter {
     this.gameOver = false;
     this.gameWon = false;
     this.score = 0;
-    this.subscriptions = new Map();
     this.spawnPoints = {
       topLeft: [-100, -100],
       topMiddle: [this.canvas.width / 2, -100],
@@ -52,15 +51,6 @@ export default class Game extends EventEmitter {
     this.subscribe(this.events.GAME_WON, this.onGameWon.bind(this));
   }
 
-  /**
-   *
-   * spawns  gameobject to pool
-   * @param {GameObject} gameObject
-   */
-  spawn(gameObject) {
-    this.objectPool.add(gameObject);
-  }
-
   get currentEnemyWaveDefeated() {
     let waveDefeated = true;
     this.objectPool.forEach((gameObject) => {
@@ -83,6 +73,14 @@ export default class Game extends EventEmitter {
   }
 
   /**
+   *
+   * spawns  gameobject to pool
+   * @param {GameObject} gameObject
+   */
+  spawn(gameObject) {
+    this.objectPool.add(gameObject);
+  }
+  /**
    * deletes gameobject from pool
    * @param {GameObject} gameObject
    */
@@ -97,9 +95,8 @@ export default class Game extends EventEmitter {
     this.gameOver = true;
   }
 
-  start(x, y) {
+  start() {
     this.player = new Player(this, 1 / 8, ...this.spawnPoints.centerMiddle, 96);
-    this.player.move(x, y);
     this.score = 0;
     this.emit(this.events.UPDATE_HUD);
     this.spawnEnemyWave();
@@ -112,7 +109,7 @@ export default class Game extends EventEmitter {
     // draw all gameobjects to  canvas
     this.objectPool.forEach(
       /**
-       *
+       * detect collisions between all gameobjects in pool, update and draw
        * @param {GameObject} gameObject
        */
       (gameObject) => {

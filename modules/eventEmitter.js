@@ -53,9 +53,15 @@ export default class EventEmitter {
     this.subscriptions.get(event).forEach((callback) => callback(...args));
   }
 
+  /**
+   *
+   * @param {EventTarget} target
+   * @param {string} event
+   * @returns {Promise}
+   */
   static once(target, event) {
     return new Promise((resolve) => {
-      target[event] = resolve;
+      target.addEventListener(event, resolve, { once: true });
     });
   }
 }
