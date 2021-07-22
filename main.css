@@ -1,5 +1,5 @@
 :root {
-  --font: 400 1rem 'Bangers', Helvetica, Arial, sans-serif;
+  --font: 400 1.5rem 'Bangers', Helvetica, Arial, sans-serif;
   --palette-background: #aeb4bf;
   --palette-foreground: #222833;
   --palette-text: #fefefe;
@@ -11,6 +11,8 @@ body {
   height: 100vh;
   font: var(--font);
   text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 1px;
 }
 
 html {
@@ -53,7 +55,6 @@ html {
   margin: 1rem;
   color: #fff;
   opacity: 0.5;
-  letter-spacing: 1px;
 }
 
 .menu {
@@ -62,14 +63,15 @@ html {
   left: 50%;
   min-height: 300px;
   min-width: 200px;
+  text-align: center;
   /* background-color: var(--palette-foreground); */
   transform: translate(-50%, -50%);
   /* border: 0.25rem outset var(--palette-background);
   box-shadow: 10px 10px 5px 5px rgba(0, 0, 0, 0.5); */
 
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 }
 button {
   font: inherit;

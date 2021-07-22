@@ -24,14 +24,13 @@ function startGame() {
   game.subscribe(GAME_OVER, () => {
     menuText.innerText = 'GAME OVER';
     startBtn.innerText = 'RESTART';
-    gameMenu.style.display = 'flex';
+    gameMenu.style.display = 'block';
     // @TODO do something on gameover
   });
   game.subscribe(GAME_WON, () => {
     menuText.innerText = 'YOU WIN';
     startBtn.innerText = 'RESTART';
-    gameMenu.style.display = 'flex';
-    console.log('WIN');
+    gameMenu.style.display = 'block';
     // @TODO do something when game is won
   });
 
