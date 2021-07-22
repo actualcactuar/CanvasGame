@@ -1,31 +1,40 @@
 import Game from './modules/game.js';
 import { crispCanvas } from './utils.js';
 
+const gameMenu = document.getElementById('gamemenu');
+const menuText = document.getElementById('menutext');
+const startBtn = document.getElementById('start');
 const score = document.getElementById('score');
 const canvas = document.getElementById('gamecanvas');
 crispCanvas(canvas);
 
 window.onresize = crispCanvas;
 
-const game = new Game(canvas);
+function startGame() {
+  const game = new Game(canvas);
 
-const {
-  events: { UPDATE_HUD, GAME_OVER, GAME_WON },
-} = game;
+  const {
+    events: { UPDATE_HUD, GAME_OVER, GAME_WON },
+  } = game;
 
-game.subscribe(UPDATE_HUD, () => {
-  score.innerText = game.score;
-});
+  game.subscribe(UPDATE_HUD, () => {
+    score.innerText = game.score;
+  });
 
-game.subscribe(GAME_OVER, () => {
-  // @TODO do something on gameover
-});
-game.subscribe(GAME_WON, () => {
-  console.log('WIN');
-  // @TODO do something when game is won
-});
+  game.subscribe(GAME_OVER, () => {
+    menuText.innerText = 'GAME OVER';
+    startBtn.innerText = 'RESTART';
+    gameMenu.style.display = 'flex';
+    // @TODO do something on gameover
+  });
+  game.subscribe(GAME_WON, () => {
+    menuText.innerText = 'YOU WIN';
+    startBtn.innerText = 'RESTART';
+    gameMenu.style.display = 'flex';
+    console.log('WIN');
+    // @TODO do something when game is won
+  });
 
-game.onStart = () => {
   /**
    *
    * @param {MouseEvent} event
@@ -42,16 +51,14 @@ game.onStart = () => {
       game.player.shoot();
     }
   };
-};
 
-canvas.addEventListener(
-  'click',
-  /**
-   *
-   * @param {MouseEvent} event
-   */
-  (event) => {
-    game.start(event.clientX, event.clientY);
-  },
-  { once: true }
-);
+  game.start();
+}
+
+startBtn.onclick = () => {
+  startBtn.blur();
+  setTimeout(() => {
+    gameMenu.style.display = 'none';
+    startGame();
+  }, 200);
+};

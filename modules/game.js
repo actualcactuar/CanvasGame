@@ -14,7 +14,6 @@ export default class Game extends EventEmitter {
     super();
     this.events = GameEvents;
     this.canvas = canvas;
-    this.canvas.style.backgroundColor = '#242a35';
     this.context = canvas.getContext('2d');
     this.objectPool = new Set();
     this.context.imageSmoothingEnabled = false;
@@ -91,10 +90,6 @@ export default class Game extends EventEmitter {
     this.objectPool.delete(gameObject);
   }
 
-  onStart() {
-    // placeholder, called on start
-  }
-
   onGameWon() {
     this.gameWon = true;
   }
@@ -105,9 +100,9 @@ export default class Game extends EventEmitter {
   start(x, y) {
     this.player = new Player(this, 1 / 2, ...this.spawnPoints.centerMiddle, 96);
     this.player.move(x, y);
-
+    this.score = 0;
+    this.emit(this.events.UPDATE_HUD);
     this.spawnEnemyWave();
-    this.onStart();
     this.update();
   }
 

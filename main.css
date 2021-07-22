@@ -1,8 +1,16 @@
+:root {
+  --font: 400 1rem 'Bangers', Helvetica, Arial, sans-serif;
+  --palette-background: #aeb4bf;
+  --palette-foreground: #222833;
+  --palette-text: #fefefe;
+}
+
 body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  font-family: 'Bangers', monospace;
+  font: var(--font);
+  text-transform: uppercase;
 }
 
 html {
@@ -16,6 +24,7 @@ html {
 }
 
 #gamecanvas {
+  background-color: #242a35;
   background-image: url(./assets/background.jpg);
   background-position: center center;
   background-size: cover;
@@ -45,4 +54,47 @@ html {
   color: #fff;
   opacity: 0.5;
   letter-spacing: 1px;
+}
+
+.menu {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  min-height: 300px;
+  min-width: 200px;
+  /* background-color: var(--palette-foreground); */
+  transform: translate(-50%, -50%);
+  /* border: 0.25rem outset var(--palette-background);
+  box-shadow: 10px 10px 5px 5px rgba(0, 0, 0, 0.5); */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+button {
+  font: inherit;
+  font-size: 3rem;
+  padding: 1rem 2rem;
+  background-color: #442198;
+  color: #fefefe;
+  border: none;
+  cursor: pointer;
+  box-shadow: -0.5rem -0.5rem 0 0 #7446e4;
+  transform: scale(1);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+h2 {
+  color: #fefefe;
+  font: var(--font);
+  font-size: 3rem;
+  text-align: center;
 }
