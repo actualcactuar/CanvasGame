@@ -16,4 +16,9 @@ export default class Star extends GameObject {
   constructor(game, size, x, y) {
     super(game, size, x, y, starImage);
   }
+
+  onUpdate() {
+    this.lookAt(this.game.player);
+    this.follow(this.game.player);
+  }
 }

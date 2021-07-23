@@ -67,8 +67,10 @@ export default class Game extends EventEmitter {
       this.emit(this.events.GAME_WON);
       return;
     }
-    wave.forEach((coordinates) => {
-      new Enemy(this, 1 / 10, ...coordinates, 7);
+    wave.forEach((coordinates, index) => {
+      const star = new Star(this, 1 / 10, ...coordinates, 7);
+      star.follow(this.player);
+      star.lookAt(this.player);
     });
   }
 
