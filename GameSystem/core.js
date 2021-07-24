@@ -83,7 +83,7 @@ export default class Game extends EventEmitter {
     // placeholder, used with extending class
   }
 
-  findGameObject(callback) {
+  FindObjectFromPool(callback) {
     if (typeof callback !== 'function') return;
     let result;
     let iterator = this.objectPool.values();

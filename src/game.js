@@ -8,7 +8,7 @@ export default class Game extends GameSystem {
    * checks if current wave has been defeated by searching the object pool
    */
   get currentEnemyWaveDefeated() {
-    const enemies = this.findGameObject(
+    const enemies = this.FindObjectFromPool(
       (gameObject) => gameObject instanceof Enemy
     );
     return !enemies;
