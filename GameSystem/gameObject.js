@@ -1,4 +1,4 @@
-import Game from './game.js';
+import Game from './core.js';
 import { degreesToRadians } from '../src/utils.js';
 
 export default class GameObject {
@@ -16,7 +16,6 @@ export default class GameObject {
     this.x = x;
     this.y = y;
     this.image = image;
-    this.game.spawn(this);
   }
 
   get width() {
@@ -52,6 +51,13 @@ export default class GameObject {
     return Math.hypot(b, a);
   }
 
+  spawn() {
+    this.game.spawn(this);
+  }
+
+  destroy() {
+    this.game.pop(this);
+  }
   /**
    * follows gameobject given as target
    * @param {GameObject} gameObject

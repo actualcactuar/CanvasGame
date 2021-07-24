@@ -1,16 +1,15 @@
-import GameObject from './gameObject.js';
-import Game from './game.js';
+import GameSystem, { GameObject } from 'GameSystem';
 import Shot from './shot.js';
 import Enemy from './enemy.js';
 import Explosion from './explosion.js';
-import { degreesToRadians, createGameImage } from '../src/utils.js';
-import playerImageUrl from '../assets/player.svg';
+import { degreesToRadians, createGameImage } from '../utils.js';
+import playerImageUrl from 'assets/player.svg';
 
 const playerImage = await createGameImage(playerImageUrl);
 
 export default class Player extends GameObject {
   /**
-   * @param {Game} game
+   * @param {GameSystem} game
    * @param {number} size
    * @param {number} x
    * @param {number} y
@@ -33,8 +32,8 @@ export default class Player extends GameObject {
       (collider instanceof Shot && collider.origin !== this)
     ) {
       this.game.emit(this.game.events.GAME_OVER);
-      new Explosion(this.game, this.size, this.x, this.y);
-      this.game.pop(this);
+      new Explosion(this.game, this.size, this.x, this.y).spawn();
+      this.destroy();
       delete this.game.player;
     }
   }
@@ -50,7 +49,7 @@ export default class Player extends GameObject {
       60,
       400,
       this
-    );
+    ).spawn();
   }
   /**
    *

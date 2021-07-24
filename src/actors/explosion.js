@@ -1,7 +1,8 @@
-import GameObject from './gameObject.js';
-import { createGameImage } from '../src/utils.js';
-import explosionImageUrl from '../assets/explosion.svg';
+import { GameObject } from 'GameSystem';
+import { createGameImage } from '../utils.js';
+import explosionImageUrl from 'assets/explosion.svg';
 const explosionImage = await createGameImage(explosionImageUrl);
+
 export default class Explosion extends GameObject {
   /**
    *
@@ -27,7 +28,7 @@ export default class Explosion extends GameObject {
         this.alpha = nextAlpha > 0 ? nextAlpha : 0;
         break;
       default:
-        this.game.pop(this);
+        this.destroy();
     }
   }
 

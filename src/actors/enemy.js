@@ -1,11 +1,10 @@
-import GameObject from './gameObject.js';
-import Game from './game.js';
+import GameSystem, { GameObject } from 'GameSystem';
 import Shot from './shot.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
-import { createGameImage, degreesToRadians } from '../src/utils.js';
-import enemyImageUrl from '../assets/enemy.svg';
-import enemyLaserImageUrl from '../assets/enemy-laser.svg';
+import { createGameImage, degreesToRadians } from '../utils.js';
+import enemyImageUrl from 'assets/enemy.svg';
+import enemyLaserImageUrl from 'assets/enemy-laser.svg';
 
 const enemyImage = await createGameImage(enemyImageUrl);
 const enemyLaser = await createGameImage(enemyLaserImageUrl);
@@ -13,7 +12,7 @@ const enemyLaser = await createGameImage(enemyLaserImageUrl);
 export default class Enemy extends GameObject {
   /**
    *
-   * @param {Game} game
+   * @param {GameSystem} game
    * @param {number} size
    * @param {number} x
    * @param {number} y
@@ -58,7 +57,7 @@ export default class Enemy extends GameObject {
       400,
       this,
       enemyLaser
-    );
+    ).spawn();
   }
 
   targetPlayer() {
@@ -92,12 +91,11 @@ export default class Enemy extends GameObject {
   }
 
   onDeath() {
-    new Explosion(this.game, this.size, this.x, this.y);
-    this.game.pop(this);
-    this.game.score = this.game.score + 100;
-    this.game.emit(this.game.events.UPDATE_HUD);
+    new Explosion(this.game, this.size, this.x, this.y).spawn();
+    this.destroy();
+    this.game.addScore(100);
     if (this.game.currentEnemyWaveDefeated) {
-      this.game.spawnEnemyWave();
+      this.game.nextSpawnWave();
     }
   }
 

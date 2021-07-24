@@ -29,6 +29,12 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      GameSystem: path.resolve(__dirname, 'GameSystem'),
+      assets: path.resolve(__dirname, 'assets'),
+      src: path.resolve(__dirname, 'src'),
+      'src/actors': path.resolve(__dirname, 'src', 'actors'),
+    },
     extensions: ['.js', '.css'],
   },
   plugins: [

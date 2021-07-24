@@ -16,7 +16,11 @@ export function crispCanvas(canvas) {
 export function degreesToRadians(degree) {
   return degree * (Math.PI / 180);
 }
-
+/**
+ * Crasy implementation dues chrome bug rescaling svg viewbox on natural width
+ * @param {string} source path to static image asset of game image
+ * @returns
+ */
 export async function createGameImage(source) {
   const response = await fetch(source);
   const blob = await response.blob();

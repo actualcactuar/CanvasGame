@@ -1,17 +1,16 @@
-import GameObject from './gameObject.js';
-import Game from './game.js';
+import Core, { GameObject } from 'GameSystem';
 import Enemy from './enemy.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
-import { createGameImage } from '../src/utils.js';
-import playerLaserUrl from '../assets/laser.svg';
+import { createGameImage } from '../utils.js';
+import playerLaserUrl from 'assets/laser.svg';
 
 const shotImage = await createGameImage(playerLaserUrl);
 
 export default class Shot extends GameObject {
   /**
    *
-   * @param {Game} game
+   * @param {Core} game
    * @param {number} size
    * @param {number} x
    * @param {number} y
@@ -66,8 +65,8 @@ export default class Shot extends GameObject {
         collider !== this.origin) ||
       (collider instanceof Shot && collider !== this)
     ) {
-      new Explosion(this.game, this.size / 2, this.x, this.y);
-      this.game.pop(this);
+      new Explosion(this.game, this.size / 2, this.x, this.y).spawn();
+      this.destroy();
     }
   }
 

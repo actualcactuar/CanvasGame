@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es6"
+    "target": "es6",
+    "baseUrl": ".",
+    "paths": {
+      "assets": ["./assets/"],
+      "GameSystem": ["GameSystem"],
+      "src": ["./src/"],
+      "src/actors": ["./src/actors"]
+    }
   },
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,4 @@
-import Player from './player.js';
 import GameObject from './gameObject.js';
-import Enemy from './enemy.js';
-import Star from './star.js';
 import * as GameEvents from './events.js';
 import EventEmitter from './eventEmitter.js';
 
@@ -19,7 +16,6 @@ export default class Game extends EventEmitter {
     this.context.imageSmoothingEnabled = false;
     this.gameOver = false;
     this.gameWon = false;
-    this.score = 0;
     this.spawnPoints = {
       topLeft: [-100, -100],
       topMiddle: [this.canvas.width / 2, -100],
@@ -31,46 +27,28 @@ export default class Game extends EventEmitter {
       bottomMiddle: [this.canvas.width / 2, this.canvas.height + 100],
       bottomRight: [this.canvas.width + 100, this.canvas.height + 100],
     };
-    this.enemyWaves = new Set()
-      .add([this.spawnPoints.centerRight, this.spawnPoints.topLeft])
-      .add([this.spawnPoints.bottomMiddle, this.spawnPoints.bottomLeft])
-      .add([
-        this.spawnPoints.centerLeft,
-        this.spawnPoints.topRight,
-        this.spawnPoints.bottomRight,
-      ])
-      .add([
-        this.spawnPoints.bottomLeft,
-        this.spawnPoints.topRight,
-        this.spawnPoints.bottomRight,
-        this.spawnPoints.topMiddle,
-      ])
-      .values();
-
+    this.spawnPool = new Set();
+    this.spawnPoolIterator = this.spawnPool.values();
     this.subscribe(this.events.GAME_OVER, this.onGameOver.bind(this));
     this.subscribe(this.events.GAME_WON, this.onGameWon.bind(this));
+    this.onInit();
   }
 
-  get currentEnemyWaveDefeated() {
-    let waveDefeated = true;
-    this.objectPool.forEach((gameObject) => {
-      if (gameObject instanceof Enemy) {
-        waveDefeated = false;
-      }
-    });
-    return waveDefeated;
+  addSpawnWave(initializer, gameObjectArgsArray) {
+    this.spawnPool.add([initializer, gameObjectArgsArray]);
   }
 
-  spawnEnemyWave() {
-    const { value: wave, done } = this.enemyWaves.next();
+  nextSpawnWave() {
+    const { value: wave, done } = this.spawnPoolIterator.next();
     if (done) {
-      this.emit(this.events.GAME_WON);
+      this.emit(this.events.SPAWN_POOL_EMPTY);
       return;
     }
-    wave.forEach((coordinates, index) => {
-      const star = new Star(this, 1 / 10, ...coordinates, 7);
-      star.follow(this.player);
-      star.lookAt(this.player);
+
+    const [initializer, gameObjectArgsArray] = wave;
+    gameObjectArgsArray.forEach((args) => {
+      const gameObject = new initializer(this, ...args);
+      this.spawn(gameObject);
     });
   }
 
@@ -97,11 +75,17 @@ export default class Game extends EventEmitter {
     this.gameOver = true;
   }
 
+  onInit() {
+    // placeholder, userd with exteding class
+  }
+
+  onStart() {
+    // placeholder, used with extending class
+  }
+
   start() {
-    this.player = new Player(this, 1 / 8, ...this.spawnPoints.centerMiddle, 96);
-    this.score = 0;
+    this.onStart();
     this.emit(this.events.UPDATE_HUD);
-    this.spawnEnemyWave();
     this.update();
   }
 

@@ -1,6 +1,8 @@
 import './main.css';
-import Game from '../engine/game.js';
+import Game from 'src/game';
 import { crispCanvas } from './utils.js';
+
+console.log('imports');
 
 const { matches } = window.matchMedia('(any-hover: hover)');
 const hasTouchScreen = !matches;
