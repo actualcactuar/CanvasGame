@@ -2,40 +2,16 @@ import GameSystem from 'GameSystem';
 import Player from 'src/actors/player.js';
 import Enemy from 'src/actors/enemy.js';
 import Star from 'src/actors/star.js';
-console.log('imports');
 
 export default class Game extends GameSystem {
   /**
-   * Canvas element where game is rendered
-   * @param {HTMLCanvasElement} canvas
+   * checks if current wave has been defeated by searching the object pool
    */
-  constructor(canvas) {
-    super(canvas);
-    this.enemyWaves = new Set()
-      .add([this.spawnPoints.centerRight, this.spawnPoints.topLeft])
-      .add([this.spawnPoints.bottomMiddle, this.spawnPoints.bottomLeft])
-      .add([
-        this.spawnPoints.centerLeft,
-        this.spawnPoints.topRight,
-        this.spawnPoints.bottomRight,
-      ])
-      .add([
-        this.spawnPoints.bottomLeft,
-        this.spawnPoints.topRight,
-        this.spawnPoints.bottomRight,
-        this.spawnPoints.topMiddle,
-      ])
-      .values();
-  }
-
   get currentEnemyWaveDefeated() {
-    let waveDefeated = true;
-    this.objectPool.forEach((gameObject) => {
-      if (gameObject instanceof Enemy) {
-        waveDefeated = false;
-      }
-    });
-    return waveDefeated;
+    const enemies = this.findGameObject(
+      (gameObject) => gameObject instanceof Enemy
+    );
+    return !enemies;
   }
 
   /**
@@ -43,6 +19,7 @@ export default class Game extends GameSystem {
    */
   addScore(value) {
     this.score = this.score + value;
+    this.emit(this.events.UPDATE_HUD);
   }
 
   onInit() {

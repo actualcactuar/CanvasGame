@@ -83,6 +83,25 @@ export default class Game extends EventEmitter {
     // placeholder, used with extending class
   }
 
+  findGameObject(callback) {
+    if (typeof callback !== 'function') return;
+    let result;
+    let iterator = this.objectPool.values();
+    while (true) {
+      const { done, value } = iterator.next();
+      if (done) {
+        break;
+      }
+
+      if (callback(value)) {
+        result = value;
+        break;
+      }
+    }
+
+    return result;
+  }
+
   start() {
     this.onStart();
     this.emit(this.events.UPDATE_HUD);
