@@ -45,9 +45,9 @@ export default class GameObject {
    * @param {GameObject} gameObject
    * @returns
    */
-  getDistanceFrom(gameObject) {
-    const a = gameObject.center.x - this.center.x;
-    const b = gameObject.center.y - this.center.y;
+  getDistanceFromPoint(x, y) {
+    const a = x - this.center.x;
+    const b = y - this.center.y;
     return Math.hypot(b, a);
   }
 
@@ -62,43 +62,37 @@ export default class GameObject {
    * follows gameobject given as target
    * @param {GameObject} gameObject
    */
-  follow(gameObject) {
-    let speed = this.speed;
-    if (!speed) speed = 5;
-
-    const a = gameObject.center.x - this.center.x;
-    const b = gameObject.center.y - this.center.y;
+  followPoint(x, y, movement = 1, distance = 0) {
+    const a = x - this.center.x;
+    const b = y - this.center.y;
     const c = Math.hypot(b, a);
     const sumOfAllSides = Math.abs(a) + Math.abs(b) + c;
 
-    const xAxisMovementDirection =
-      this.center.x > gameObject.center.x ? 'left' : 'right';
-    const yAxisMovementDirection =
-      this.center.y > gameObject.center.y ? 'up' : 'down';
+    const xAxisMovementDirection = this.center.x > x ? 'left' : 'right';
+    const yAxisMovementDirection = this.center.y > y ? 'up' : 'down';
     const xAxisMovementEmphasis = Math.abs(a / sumOfAllSides);
     const yAxisMovementEmphasis = Math.abs(b / sumOfAllSides);
 
-    this.x =
-      xAxisMovementDirection === 'left' // plus or minus depending on direction
-        ? this.x - speed * xAxisMovementEmphasis // multiply movement with percentual value of size of the side so movement has correct acceleration
-        : this.x + speed * xAxisMovementEmphasis;
-    this.y =
-      yAxisMovementDirection === 'up'
-        ? this.y - speed * yAxisMovementEmphasis
-        : this.y + speed * yAxisMovementEmphasis;
+    if (c > distance) {
+      this.x =
+        xAxisMovementDirection === 'left' // plus or minus depending on direction
+          ? this.x - movement * xAxisMovementEmphasis // multiply movement with percentual value of size of the side so movement has correct acceleration
+          : this.x + movement * xAxisMovementEmphasis;
+      this.y =
+        yAxisMovementDirection === 'up'
+          ? this.y - movement * yAxisMovementEmphasis
+          : this.y + movement * yAxisMovementEmphasis;
+    }
   }
 
   /**
    *
    * @param {GameObject} gameObject
    */
-  lookAt(gameObject) {
+  lookAtPoint(x, y) {
     const turn = degreesToRadians(90);
-    const angle = Math.atan2(
-      this.y - gameObject.center.y,
-      this.x - gameObject.center.x
-    );
-    this.rotate = turn + angle;
+    const angle = Math.atan2(this.center.y - y, this.center.x - x);
+    this.rotate = angle - turn;
   }
 
   onUpdate() {
@@ -120,8 +114,8 @@ export default class GameObject {
       this.image,
       this.drawHeight, // draw self to own center
       this.drawWidth,
-      this.image.width * this.size,
-      this.image.height * this.size
+      this.height,
+      this.width
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
   }

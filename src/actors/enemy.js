@@ -1,8 +1,9 @@
-import GameSystem, { GameObject } from 'GameSystem';
+import Game from 'src/game';
+import { GameObject } from 'GameSystem';
 import Shot from './shot.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
-import { createGameImage, degreesToRadians } from '../utils.js';
+import { createGameImage } from '../utils.js';
 import enemyImageUrl from 'assets/enemy.svg';
 import enemyLaserImageUrl from 'assets/enemy-laser.svg';
 
@@ -12,7 +13,7 @@ const enemyLaser = await createGameImage(enemyLaserImageUrl);
 export default class Enemy extends GameObject {
   /**
    *
-   * @param {GameSystem} game
+   * @param {Game} game
    * @param {number} size
    * @param {number} x
    * @param {number} y
@@ -25,24 +26,6 @@ export default class Enemy extends GameObject {
     this.speed = speed;
     this.lastFiredTime = Date.now();
     this.rateOfFire = rateOfFire;
-  }
-
-  calculateDirection() {
-    if (!this.game.player) {
-      this.speed = 0;
-      return;
-    }
-
-    const a = this.playerX - this.center.x;
-    const b = this.playerY - this.center.y;
-    const c = Math.hypot(b, a);
-    const sumOfAllSides = Math.abs(a) + Math.abs(b) + c;
-
-    this.xDirection = this.center.x > this.playerX ? 'left' : 'right';
-    this.yDirection = this.center.y > this.playerY ? 'up' : 'down';
-    this.xEmphasis = Math.abs(a / sumOfAllSides);
-    this.yEmphasis = Math.abs(b / sumOfAllSides);
-    this.distanceFromPlayer = c;
   }
 
   shootPlayer() {
@@ -60,34 +43,20 @@ export default class Enemy extends GameObject {
     ).spawn();
   }
 
-  targetPlayer() {
-    if (!this.game.player) {
-      this.speed = 0;
-      return;
-    }
-
-    this.playerX = this.game.player.center.x;
-    this.playerY = this.game.player.center.y;
-
-    this.calculateDirection();
+  onUpdate() {
+    if (!this.game.player) return;
 
     if (Date.now() - this.lastFiredTime > this.rateOfFire) {
       this.lastFiredTime = Date.now();
       this.shootPlayer();
     }
 
-    this.x =
-      this.xDirection === 'left' // plus or minus depending on direction
-        ? this.x - this.speed * this.xEmphasis // multiply movement with percentual value of size of the side so movement has correct acceleration
-        : this.x + this.speed * this.xEmphasis;
-    this.y =
-      this.yDirection === 'up'
-        ? this.y - this.speed * this.yEmphasis
-        : this.y + this.speed * this.yEmphasis;
-  }
-
-  onUpdate() {
-    this.targetPlayer();
+    this.lookAtPoint(this.game.player.center.x, this.game.player.center.y);
+    this.followPoint(
+      this.game.player.center.x,
+      this.game.player.center.y,
+      this.speed
+    );
   }
 
   onDeath() {
@@ -107,23 +76,5 @@ export default class Enemy extends GameObject {
     ) {
       this.onDeath();
     }
-  }
-
-  draw() {
-    const context = this.game.context;
-    const turn = degreesToRadians(90);
-    const angle = Math.atan2(this.y - this.playerY, this.x - this.playerX);
-
-    context.save();
-    context.translate(this.center.x, this.center.y);
-    context.rotate(angle + turn);
-    context.drawImage(
-      this.image,
-      this.drawHeight,
-      this.drawWidth,
-      this.image.width * this.size,
-      this.image.height * this.size
-    );
-    context.restore();
   }
 }

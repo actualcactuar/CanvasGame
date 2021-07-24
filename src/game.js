@@ -1,7 +1,6 @@
 import GameSystem from 'GameSystem';
 import Player from 'src/actors/player.js';
 import Enemy from 'src/actors/enemy.js';
-import Star from 'src/actors/star.js';
 
 export default class Game extends GameSystem {
   /**
