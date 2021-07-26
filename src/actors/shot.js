@@ -41,7 +41,7 @@ export default class Shot extends GameObject {
     this.yDirection = this.yOrigin > this.yDestination ? 'up' : 'down';
     const a = this.yDestination - this.yOrigin;
     const b = this.xDestination - this.xOrigin;
-    const c = Math.hypot(b, a);
+    const c = Math.hypot(a, b);
     const sumOfAllSides = Math.abs(a) + Math.abs(b) + c;
     this.xEmphasis = Math.abs(b / sumOfAllSides);
     this.yEmphasis = Math.abs(a / sumOfAllSides);
@@ -82,7 +82,7 @@ export default class Shot extends GameObject {
         : this.y + 1 * this.speed * this.yEmphasis;
 
     if (this.distanceFromOriginPoint > this.range) {
-      this.game.pop(this);
+      this.destroy();
     }
   }
 
@@ -90,12 +90,15 @@ export default class Shot extends GameObject {
     const context = this.game.context;
     context.save(); // save context so only player is affected
     context.translate(this.x, this.y); // translate image to correct position
+    if (this.rotate) {
+      context.rotate(this.rotate);
+    }
     context.drawImage(
       this.image,
-      this.drawHeight, // draw self to own center
-      this.drawWidth,
-      this.image.width * this.size,
-      this.image.height * this.size
+      this.drawWidth, // draw self to own center
+      this.drawHeight,
+      this.width,
+      this.height
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
   }

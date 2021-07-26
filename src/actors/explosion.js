@@ -47,8 +47,8 @@ export default class Explosion extends GameObject {
       this.image,
       this.drawHeight, // draw self to own center
       this.drawWidth,
-      this.image.width * this.size,
-      this.image.height * this.size
+      this.image.height * this.size,
+      this.image.width * this.size
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
   }

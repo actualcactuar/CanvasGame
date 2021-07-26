@@ -48,7 +48,7 @@ export default class Player extends GameObject {
       this.cursorX,
       this.cursorY,
       60,
-      400,
+      600,
       this
     ).spawn();
   }

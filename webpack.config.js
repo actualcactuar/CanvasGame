@@ -48,7 +48,7 @@ module.exports = {
     new CleanWebpackPlugin(),
   ],
   devServer: {
-    port: 8080,
+    port: 9090,
     hot: true,
     open: true,
     contentBase: path.join(__dirname, 'assets'),

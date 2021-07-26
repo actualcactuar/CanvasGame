@@ -35,8 +35,8 @@ export default class GameObject {
 
   get center() {
     return {
-      x: this.x - (this.image.width * this.size) / 2,
-      y: this.y - (this.image.height * this.size) / 2,
+      x: this.x - this.width / 2,
+      y: this.y - this.height / 2,
     };
   }
 
@@ -112,8 +112,8 @@ export default class GameObject {
     }
     context.drawImage(
       this.image,
-      this.drawHeight, // draw self to own center
-      this.drawWidth,
+      this.drawWidth, // draw self to own center
+      this.drawHeight,
       this.width,
       this.height
     ); // draw player to top left corner, so transform value is correct
