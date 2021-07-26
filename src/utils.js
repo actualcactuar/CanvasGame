@@ -40,3 +40,14 @@ export async function createGameImage(source) {
 
   return image;
 }
+
+export function getRandomFromRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function getRandomCoordinates(canvas) {
+  const x = getRandomFromRange(100, canvas.width);
+  const y = getRandomFromRange(100, canvas.height);
+
+  return [x, y];
+}

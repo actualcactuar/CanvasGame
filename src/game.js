@@ -1,6 +1,12 @@
 import GameSystem from 'GameSystem';
 import Player from 'src/actors/player.js';
 import Enemy from 'src/actors/enemy.js';
+import Star from './actors/star';
+import {
+  getRandomCoordinates,
+  getRandomFromRange,
+  degreesToRadians,
+} from './utils';
 
 export default class Game extends GameSystem {
   /**
@@ -35,6 +41,15 @@ export default class Game extends GameSystem {
     this.subscribe(this.events.SPAWN_POOL_EMPTY, () => {
       this.emit(this.events.GAME_WON);
     });
+
+    for (let i = 0; i < 10; i++) {
+      const coordinates = getRandomCoordinates(this.canvas);
+      const rotation = getRandomFromRange(10, 90);
+      const radian = degreesToRadians(rotation);
+      const star = new Star(this, 1 / 10, ...coordinates);
+      star.rotate = radian;
+      star.spawn();
+    }
   }
 
   onStart() {
