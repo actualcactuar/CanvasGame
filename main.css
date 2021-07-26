@@ -29,6 +29,7 @@ html {
 }
 
 #gamecanvas {
+  cursor: crosshair;
   background-color: #1d222e;
   /* background-image: url(../assets/background.jpg);
   background-position: center center;
