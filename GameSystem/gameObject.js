@@ -114,8 +114,8 @@ export default class GameObject {
       this.image,
       this.drawHeight, // draw self to own center
       this.drawWidth,
-      this.height,
-      this.width
+      this.width,
+      this.height
     ); // draw player to top left corner, so transform value is correct
     context.restore(); // restore other canvas components
   }
