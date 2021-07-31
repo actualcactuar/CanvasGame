@@ -1,4 +1,4 @@
-import Core, { GameObject } from 'GameSystem';
+import { GameObject } from 'GameSystem';
 import Enemy from './enemy.js';
 import Explosion from './explosion.js';
 import Player from './player.js';
@@ -7,10 +7,13 @@ import playerLaserUrl from 'assets/laser.svg';
 
 const shotImage = await createGameImage(playerLaserUrl);
 
+/**
+ * @typedef {import("../game.js").default} Game
+ */
 export default class Shot extends GameObject {
   /**
    *
-   * @param {Core} game
+   * @param {Game} game
    * @param {number} size
    * @param {number} x
    * @param {number} y

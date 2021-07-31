@@ -1,4 +1,3 @@
-import Game from 'src/game';
 import { GameObject } from 'GameSystem';
 import Shot from './shot.js';
 import Explosion from './explosion.js';
@@ -9,6 +8,10 @@ import enemyLaserImageUrl from 'assets/enemy-laser.svg';
 
 const enemyImage = await createGameImage(enemyImageUrl);
 const enemyLaser = await createGameImage(enemyLaserImageUrl);
+
+/**
+ * @typedef {import("../game.js").default} Game
+ */
 
 export default class Enemy extends GameObject {
   /**

@@ -1,6 +1,8 @@
-import Game from './core.js';
 import { degreesToRadians } from '../src/utils.js';
 
+/**
+ * @typedef {import("./core.js").default} Game
+ */
 export default class GameObject {
   /**
    *

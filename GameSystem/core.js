@@ -1,6 +1,9 @@
-import GameObject from './gameObject.js';
 import * as GameEvents from './events.js';
 import EventEmitter from './eventEmitter.js';
+
+/**
+ * @typedef {import("../GameSystem/gameObject.js")} GameObject
+ */
 
 export default class Game extends EventEmitter {
   /**

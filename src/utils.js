@@ -17,7 +17,7 @@ export function degreesToRadians(degree) {
   return degree * (Math.PI / 180);
 }
 /**
- * Crasy implementation dues chrome bug rescaling svg viewbox on natural width
+ * Crasy implementation due chrome bug rescaling svg viewbox on natural width
  * @param {string} source path to static image asset of game image
  * @returns
  */

@@ -1,13 +1,15 @@
 import { GameObject } from 'GameSystem';
-import Game from 'src/game';
 import Shot from './shot.js';
 import Enemy from './enemy.js';
 import Explosion from './explosion.js';
-import { degreesToRadians, createGameImage } from '../utils.js';
+import { createGameImage } from '../utils.js';
 import playerImageUrl from 'assets/player.svg';
 
 const playerImage = await createGameImage(playerImageUrl);
 
+/**
+ * @typedef {import("../game.js").default} Game
+ */
 export default class Player extends GameObject {
   /**
    * @param {Game} game
